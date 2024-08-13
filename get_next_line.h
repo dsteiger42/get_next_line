@@ -12,7 +12,7 @@
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
+// falta incluir a biblioteca do libft
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 15
 # endif
