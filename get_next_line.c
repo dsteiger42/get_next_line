@@ -26,6 +26,7 @@ char *get_next_line(int fd) {
     dest = ft_strjoin(dest, buf);   // joins the leftover rom previous reads
     buffer_clear(buf);
     while (!ft_strchr(dest, '\n'))     // strchr finds the \n in a str. In this case, while its not == \n
+                                        // trocar pra *dest != \n pq nao posso usar strchr. dest++.
     {
         bytes_read = read(fd, buf, BUFFER_SIZE);
         if (bytes_read <= 0)
