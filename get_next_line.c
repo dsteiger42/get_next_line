@@ -12,29 +12,31 @@
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
-{
-	static char		buf [BUFFER_SIZE + 1];
-	char i;
-	char *dest;
-	
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	dest = malloc(sizeof(char) * 1);
-	if (!dest)
-		return (NULL);
-	dest[0] = '\0';			// inicializar a str
-	ft_strjoin(dest, buf);	//qd tiver \n antes de ler o buffer todo, os caracteres que faltam ler, ficam armazenados no static buffer
-	if (buffer_clear(buf) == '\n')
-		return (dest);
-	
-	
-	
-	
-	read(fd, buf, BUFFER_SIZE);
+char *get_next_line(int fd) {
+    static char buf[BUFFER_SIZE + 1] = {0};
+    char *dest = NULL;
+    int bytes_read;
 
-
-
-	
+    if (fd < 0 || BUFFER_SIZE <= 0)
+        return NULL;
+    dest = malloc(1);
+    if (!dest)
+        return NULL;
+    dest[0] = '\0';
+    dest = ft_strjoin(dest, buf);   // joins the leftover rom previous reads
+    buffer_clear(buf);
+    while (!strchr(dest, '\n'))     // strchr finds the \n in a str. In this case, while its not == \n
+    {
+        bytes_read = read(fd, buf, BUFFER_SIZE);
+        if (bytes_read <= 0)
+            break;
+        buf[bytes_read] = '\0'; // null terminating the string in 'buf'
+        dest = ft_strjoin(dest, buf);
+        buffer_clear(buf);
+    }
+    if (dest[0] == '\0') {
+        free(dest);
+        return NULL;
+    }
+    return dest;
 }
-
