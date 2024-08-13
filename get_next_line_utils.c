@@ -68,9 +68,9 @@ void	buffer_clear(char *buffer)
 		buffer[i] = '\0';
 		i++;
 	}
-	if (buffer[i] == '\n')
+	if (buffer[i] == '\n')   //apaga a quebra de linha
 	{
-		buffer[i] = '\0';   //apaga a quebra de linha
+		buffer[i] = '\0';
 		i++;
 		while (i < BUFFER_SIZE)   //apaga todos os 'i' dps da quebra de linha e copia pro 'j'
 		{	
