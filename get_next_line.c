@@ -12,25 +12,25 @@
 
 #include "get_next_line.h"
 
-char *get_next_line(int fd) {
+char *get_next_line(int fd)
+{
     static char buf[BUFFER_SIZE + 1] = {0};
     char *dest = NULL;
     int bytes_read;
 
     if (fd < 0 || BUFFER_SIZE <= 0)
         return NULL;
-    dest = malloc(1);
+    dest = malloc(1);           // confirmar se isto é necessario
     if (!dest)
         return NULL;
     dest[0] = '\0';
-    dest = ft_strjoin(dest, buf);   // joins the leftover rom previous reads
+    dest = ft_strjoin(dest, buf);   // joins the leftover from previous reads
     buffer_clear(buf);
     while (!ft_strchr(dest, '\n'))     // strchr finds the \n in a str. In this case, while its not == \n
-                                        // trocar pra *dest != \n pq nao posso usar strchr. dest++.
     {
         bytes_read = read(fd, buf, BUFFER_SIZE);
-        if (bytes_read <= 0)
-            break;
+        if (bytes_read <= 0)        //If read() returns 0, it means the end of the file (EOF) has been reached.
+            break;                       //If read() returns a negative value, it indicates an error occurred during reading. 
         buf[bytes_read] = '\0'; // null terminating the string in 'buf'
         dest = ft_strjoin(dest, buf);
         buffer_clear(buf);
