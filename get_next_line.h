@@ -16,7 +16,6 @@
 #  define BUFFER_SIZE 15
 # endif
 
-// falta incluir a biblioteca do libft
 # include <fcntl.h>
 # include <limits.h>
 # include <stddef.h>
@@ -29,5 +28,7 @@ char	*ft_strjoin(char *s1, char *s2);
 void	buffer_clear(char *buffer);
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *str, int c);
+void	*ft_memset(void *str, int c, size_t n);
+size_t	ft_strlen(const char *str);
 
 #endif
