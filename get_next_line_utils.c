@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*    get_next_line_utils.c                             :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:23:30 by dsteiger          #+#    #+#             */
-/*   Updated: 2024/06/21 13:39:23 by dsteiger         ###   ########.fr       */
+/*   Updated: 2024/08/23 19:13:25 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	j = 0;
 	while (s2[j] && s2[j] != '\n')
-		dest[i + j++] = s2[j++];
+	{
+		dest[i + j] = s2[j];
+		j++;
+	}
 	if (s2[j] == '\n')
 		dest[i + j++] = '\n';
 	dest[i + j] = '\0';
@@ -77,7 +80,47 @@ void	buffer_clear(char *buffer)
 			buffer[j] = buffer[i];
 			buffer[i] = '\0';
 			i++;
-			j++;
+			j++; 
 		}
 	}
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
+}
+
+char	*ft_strchr(const char *str, int c)
+{
+	char	*s1;
+	char	c1;
+
+	s1 = (char *)str;
+	c1 = (char )c;
+	if (c == '\0')
+		return (s1 + ft_strlen(s1));
+	while (*s1)
+	{
+		if (*s1 == c1)
+			return (s1);
+		s1++;
+	}
+	return (NULL);
+}
+
+void	*ft_memset(void *str, int c, size_t n)
+{
+	unsigned char	*mem;
+	size_t			i;
+
+	i = 0;
+	mem = str;
+	while (i < n)
+		mem[i++] = c;
+	return (mem);
 }
