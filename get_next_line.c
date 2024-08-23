@@ -14,17 +14,22 @@
 
 char *get_next_line(int fd)
 {
-    static char buf[BUFFER_SIZE + 1] = {0};
-    char *dest = NULL;
+    static char buf[BUFFER_SIZE + 1];
+    char *dest;
     int bytes_read;
 
+	ft_memset(buf, 0, sizeof(buf));		// initialize the buffer to 0
     if (fd < 0 || BUFFER_SIZE <= 0)
-        return NULL;
-    dest = malloc(1);           // confirmar se isto é necessario
-    if (!dest)
-        return NULL;
-    dest[0] = '\0';
-    dest = ft_strjoin(dest, buf);   // joins the leftover from previous reads
+	{
+		return (NULL);
+	}
+	dest = malloc(1);
+	if (!dest)
+	{
+    	return (NULL);
+	}
+	dest[0] = '\0';
+    dest = ft_strjoin(dest, buf);   // joins the leftover from previous reads, in case it exists
     buffer_clear(buf);
     while (!ft_strchr(dest, '\n'))     // strchr finds the \n in a str. In this case, while its not == \n
     {
