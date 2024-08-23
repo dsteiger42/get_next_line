@@ -28,5 +28,6 @@ int		strlen_to_newline(char *str);
 char	*ft_strjoin(char *s1, char *s2);
 void	buffer_clear(char *buffer);
 char	*get_next_line(int fd);
+char	*ft_strchr(const char *str, int c);
 
 #endif
