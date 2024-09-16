@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:12:42 by dsteiger          #+#    #+#             */
-/*   Updated: 2024/06/21 13:39:32 by dsteiger         ###   ########.fr       */
+/*   Updated: 2024/08/27 13:34:42 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-int		strlen_to_newline(char *str);
 char	*ft_strjoin(char *s1, char *s2);
-void	buffer_clear(char *buffer);
+size_t	ft_strlen(char *s);
+int		buffer_clear(char *line);
+char	*free_buf(char *buf);
 char	*get_next_line(int fd);
-char	*ft_strchr(const char *str, int c);
-void	*ft_memset(void *str, int c, size_t n);
-size_t	ft_strlen(const char *str);
 
 #endif
