@@ -6,43 +6,52 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:12:42 by dsteiger          #+#    #+#             */
-/*   Updated: 2024/06/21 13:39:32 by dsteiger         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:24:19 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    static char buf[BUFFER_SIZE + 1];
-    char *dest;
-    int bytes_read;
+	static char	buf[BUFFER_SIZE + 1];
+	char		*dest;
+	int			bytes_read;
 
-	ft_memset(buf, 0, sizeof(buf));		// initialize the buffer to 0
-    if (fd < 0 || BUFFER_SIZE <= 0)
-	{
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	}
-	dest = malloc(1);
+	dest = malloc(1 * sizeof(char));
 	if (!dest)
-	{
-    	return (NULL);
-	}
+		return (NULL);
 	dest[0] = '\0';
-    dest = ft_strjoin(dest, buf);   // joins the leftover from previous reads, in case it exists
-    buffer_clear(buf);
-    while (!ft_strchr(dest, '\n'))     // strchr finds the \n in a str. In this case, while its not == \n
-    {
-        bytes_read = read(fd, buf, BUFFER_SIZE);
-        if (bytes_read <= 0)        //If read() returns 0, it means the end of the file (EOF) has been reached.
-            break;                       //If read() returns a negative value, it indicates an error occurred during reading. 
-        buf[bytes_read] = '\0'; // null terminating the string in 'buf'
-        dest = ft_strjoin(dest, buf);
-        buffer_clear(buf);
-    }
-    if (dest[0] == '\0') {
-        free(dest);
-        return NULL;
-    }
-    return dest;
+	dest = ft_strjoin(dest, buf);
+	if (buffer_clear(buf) == 1)
+		return (dest);
+	bytes_read = read(fd, buf, BUFFER_SIZE);
+	if (bytes_read <= 0 && (!*dest))
+		return (free_buf(dest));
+	while (bytes_read > 0)
+	{
+		buf[bytes_read] = '\0';
+		dest = ft_strjoin(dest, buf);
+		if (buffer_clear(buf) == 1)
+			break ;
+		bytes_read = read(fd, buf, BUFFER_SIZE);
+	}
+	return (dest);
 }
+
+// int	main(void)
+// {
+// 	int fd = open("test.txt", O_RDONLY);
+// 	int *line;
+// 	if (fd == -1)
+// 		return (1);
+// 	while (line = get_next_line(fd))
+// 	{
+// 		printf("%s", line);
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
